@@ -17,12 +17,14 @@ public class RemoveXFromStrings {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		RemoveXFromStrings inst = new RemoveXFromStrings();
+
 		List<String> strArray = new ArrayList<>();
 		try {
 			for (int i = 0; i < args.length; i++) {
 				strArray.add(args[i]);
 			}
-			List<String> noXArray = removeAllX(strArray);
+			List<String> noXArray = inst.removeAllX(strArray);
 			System.out.println("removeAllX: ");
 			noXArray.forEach(System.out::println);
 		} catch (Exception e) {
@@ -30,7 +32,7 @@ public class RemoveXFromStrings {
 		}
 	}
 
-	public static List<String> removeAllX(List<String> s) {
+	public List<String> removeAllX(List<String> s) {
 		s = s.stream().map(str -> str.replace("x", "")).collect(Collectors.toList());
 		return s;
 	}

@@ -11,29 +11,34 @@ import java.util.Scanner;
  * @author Thomas Davis
  *
  */
+
 public class LambdaProblems {
+	interface PerformOperation {
+		boolean isCorrect(Integer i);
+	}
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		LambdaProblems newProbs = new LambdaProblems();
 		File file = new File("src/resources/inputStub.txt");
-		Scanner scan;
 		try {
-			scan = new Scanner(file);
+			Scanner scan = new Scanner(file);
 
 			Integer i = Integer.parseInt(scan.nextLine());
 			for (Integer k = 0; k < i; k++) {
 				String[] strs = scan.nextLine().trim().split(" ");
 				switch (Integer.parseInt(strs[0])) {
 				case 1:
-					isOdd(Integer.parseInt(strs[1]));
+					System.out.println(check(newProbs.isOddish(), Integer.parseInt(strs[1])) ? "ODD" : "EVEN");
 					break;
 				case 2:
-					isPrime(Integer.parseInt(strs[1]));
+					System.out.println(check(newProbs.isPrimeish(), Integer.parseInt(strs[1])) ? "PRIME" : "COMPOSITE");
 					break;
 				case 3:
-					isPalindrome(Integer.parseInt(strs[1]));
+					System.out.println(check(newProbs.isPalindromeish(), Integer.parseInt(strs[1])) ? "PALINDROME"
+							: "NOT PALINDROME");
 					break;
 				}
 			}
@@ -43,54 +48,50 @@ public class LambdaProblems {
 		}
 	}
 
-	public static boolean isOdd(Integer i) {
-		int check = i % 2;
-		if (check == 0) {
-			System.out.println("EVEN");
-			return true;
-		} else {
-			System.out.println("ODD");
-			return false;
-		}
+	public PerformOperation isOddish() {
+		return i -> i % 2 != 0;
 	}
 
-	public static boolean isPrime(Integer i) {
-		boolean primeFlag = false;
+	public PerformOperation isPrimeish() {
+		return i -> {
+			boolean primeFlag = true;
 
-		for (int k = 2; k < i / 2; k++) {
-			if (i % k == 0) {
-				primeFlag = true;
-				break;
+			if (i < 2) {
+				primeFlag = false;
+			} else {
+				for (int k = 2; k <= i / 2; k++) {
+					if (i % k == 0) {
+						primeFlag = false;
+						break;
+					}
+				}
 			}
-		}
 
-		if (!primeFlag && i > 0) {
-			System.out.println("PRIME");
-			return true;
-		} else {
-			System.out.println("COMPOSITE");
-			return false;
-		}
+			return primeFlag;
+		};
 	}
 
-	public static boolean isPalindrome(Integer i) {
-		Integer reversedNumber = 0;
-		Integer remainder = 0;
-		Integer originalNumber = i;
+	public PerformOperation isPalindromeish() {
+		return i -> {
+			Integer reversedNumber = 0;
+			Integer remainder = 0;
+			Integer originalNumber = i;
 
-		while (i != 0) {
-			remainder = i % 10;
-			reversedNumber = reversedNumber * 10 + remainder;
-			i /= 10;
-		}
+			while (i != 0) {
+				remainder = i % 10;
+				reversedNumber = reversedNumber * 10 + remainder;
+				i /= 10;
+			}
 
-		if (originalNumber.equals(reversedNumber)) {
-			System.out.println("PALINDROME");
-			return true;
-		} else {
-			System.out.println("NOT PALINDROME");
-			return false;
-		}
+			if (originalNumber.equals(reversedNumber)) {
+				return true;
+			} else {
+				return false;
+			}
+		};
 	}
 
+	public static boolean check(PerformOperation performOperation, int num) {
+		return performOperation.isCorrect(num);
+	}
 }

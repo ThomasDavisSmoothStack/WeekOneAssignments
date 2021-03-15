@@ -1,17 +1,23 @@
 package com.smoothstack.weekone.project;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Arrays;
 import java.util.List;
 
-import com.smoothstack.assignments.ThreeACheck;
+import org.junit.Test;
 
 public class RemoveXFromStringsTest {
-	ThreeACheck a = new ThreeACheck();
+	RemoveXFromStrings a = new RemoveXFromStrings();
 
 	List<String> strTest = Arrays.asList("xax", "abc");
-//	List<String> strTestTwo = Arrays.asList("xax", "123");
-//	
-//	@Test
-//	assertEquals(new List<String>("a", "abc"), a.threeA(strTest));
+	List<String> strTestTwo = Arrays.asList("xax", "123");
+	List<String> expStrs = Arrays.asList("a", "abc");
+	List<String> result = a.removeAllX(strTest);
+
+	@Test
+	public void testX() {
+		assertEquals(expStrs, result);
+	}
 
 }

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author Kealldin
+ * @author Thomas Davis
  *
  */
 public class ThreeACheck {
